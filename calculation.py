@@ -2,12 +2,12 @@ import numpy as np
 from scipy.interpolate import CubicSpline
 from mpmath import iv
 
-def calculateRanges():
+def calculateRanges(start, end):
 
 
     # Przedział x (można go dostosować)
-    xStart = iv.mpf(1)
-    xEnd = iv.mpf(7)
+    xStart = iv.mpf(start)
+    xEnd = iv.mpf(end)
 
     xValuesInterval = np.array([(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)])  # Przedziały x (przedziałowe)
     yValuesInterval = np.array([(0.9, 1.1), (1.9, 2.1), (2.9, 3.1), (4.9, 5.1)])  # Przedziały y (przedziałowe)
@@ -28,8 +28,13 @@ def calculateRanges():
     coefficientsInterval = csInterval.c
 
 
-    print("Wartość na początku przedziału (przedziałowa):", valueStartInterval)
-    print("Wartość na końcu przedziału (przedziałowa):", valueEndInterval)
-    print("Współczynniki funkcji sklejanej (przedziałowa):", coefficientsInterval)
+    return valueStartInterval, valueEndInterval, coefficientsInterval
 
-calculateRanges()
+
+valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(start=1, end=7)
+
+
+
+print("Wartość na początku przedziału (przedziałowa):", valueStartInterval)
+print("Wartość na końcu przedziału (przedziałowa):", valueEndInterval)
+print("Współczynniki funkcji sklejanej (przedziałowa):", coefficientsInterval)
