@@ -6,7 +6,7 @@ xValues = [(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)]  # Przedziały x
 yValues = [(0.9, 1.1), (1.9, 2.1), (2.9, 3.1), (4.9, 5.1)]  # Przedziały y
 
 
-def calculateRanges(start, end, xValues, yValues):
+def calculateRanges(start, end, derStart, derEnd, xValues, yValues):
 
 
     # Przedział x
@@ -17,11 +17,18 @@ def calculateRanges(start, end, xValues, yValues):
     yValuesInterval = np.array(yValues)  # Przedziały y
 
     # Pochodne na końcach przedziałów
-    derivativeStart = iv.mpf(6)
-    derivativeEnd = iv.mpf(14)
+    derivativeStart = iv.mpf(derStart)
+    derivativeEnd = iv.mpf(derEnd)
 
     # Tworzenie funkcji sklejanej
-    csInterval = CubicSpline(xValuesInterval[:, 0], yValuesInterval[:, 0], bc_type=((1, derivativeStart), (1, derivativeEnd)))
+    csInterval = CubicSpline(
+        xValuesInterval[:, 0],
+        yValuesInterval[:, 0],
+        bc_type=(
+            (1, derivativeStart),
+            (1, derivativeEnd)
+        )
+    )
 
     # Wartości na końcach przedziału
     valueStartInterval = csInterval(iv.mpf(xStart))
@@ -38,6 +45,8 @@ def calculateRanges(start, end, xValues, yValues):
 valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(
     start=1,
     end=7,
+    derStart=6,
+    derEnd=14,
     xValues=xValues,
     yValues=yValues
 )
