@@ -13,7 +13,7 @@ def window():
     radio_var = tk.StringVar(value="Option 1")
 
 
-    info = tk.Label(root, text="", width=20)
+    info = tk.Label(root, text="", width=25)
     info.pack(side=tk.RIGHT, padx=150)
 
     arithmeticLabel = tk.Label(root, text="Wybierz rodzaj arytmetyki")
@@ -47,11 +47,17 @@ def window():
     derivativesEntry.pack()
 
 
-    button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: show_text("Wynik Obliczeń"))
+    button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: calculate())
     button.pack(padx=15, pady=15)
 
 
-    def show_text(value):
+    def calculate():
+        if radio_var.get() == "Option 1":
+            value = "Zwykła (zmienno pozycyjna)" 
+        elif radio_var.get() == "Option 2":
+            value = "Przedziałowa (dane liczby)" 
+        elif radio_var.get() == "Option 3":
+            value = "Przedziałowa (dane przedziały)" 
         info.config(text="" + value)
 
 
