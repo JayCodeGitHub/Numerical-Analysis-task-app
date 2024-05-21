@@ -1,4 +1,12 @@
 import tkinter as tk
+from calculation import calculateRanges, calculationFloat
+
+
+xValuesRanges = [(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)]  # Przedziały x
+yValuesRanges = [(0.9, 1.1), (1.9, 2.1), (2.9, 3.1), (4.9, 5.1)]  # Przedziały y
+
+xValuesFloat=[2, 3, 4, 6]
+yValuesFloat=[1, 2, 3, 5]
 
 
 def window():
@@ -47,20 +55,42 @@ def window():
     derivativesEntry.pack()
 
 
-    button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: calculate())
+    button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: runCalculate())
     button.pack(padx=15, pady=15)
 
 
-    def calculate():
+    def runCalculate():
         if radio_var.get() == "Option 1":
-            value = "Zwykła (zmienno pozycyjna)" 
+            valueStartFloat, valueEndFloat, coefficientsFloat = calculationFloat(
+                start=1, 
+                end=7,
+                derStart=6,
+                derEnd=14,
+                xValues=xValuesFloat,
+                yValues=yValuesFloat
+            ) 
+            value = ""+ str(valueStartFloat) + "\n" + str(valueEndFloat) + "\n" + str(coefficientsFloat)
         elif radio_var.get() == "Option 2":
-            value = "Przedziałowa (dane liczby)" 
+            valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(
+                start=1,
+                end=7,
+                derStart=6,
+                derEnd=14,
+                xValues=xValuesRanges,
+                yValues=yValuesRanges
+            )
+            value = ""+ str(valueStartInterval) + "\n" + str(valueEndInterval) + "\n" + str(coefficientsInterval)
         elif radio_var.get() == "Option 3":
-            value = "Przedziałowa (dane przedziały)" 
+            valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(
+                start=1,
+                end=7,
+                derStart=6,
+                derEnd=14,
+                xValues=xValuesRanges,
+                yValues=yValuesRanges
+            )
+            value = ""+ str(valueStartInterval) + "\n" + str(valueEndInterval) + "\n" + str(coefficientsInterval)
         info.config(text="" + value)
-
-
 
     root.mainloop()
 
