@@ -4,8 +4,9 @@ from scipy.interpolate import CubicSpline
 from mpmath import iv
 
 
-def calculationFloat(start, end, derStart, derEnd):
+def calculationFloat(start, end, derStart, derEnd, xValues, yValues):
     
+    # Przedział
     xStart = iv.mpf(start)
     xEnd = iv.mpf(end)
 
@@ -16,8 +17,8 @@ def calculationFloat(start, end, derStart, derEnd):
 
 
     # Dane wejściowe - przedziały x i odpowiadające im wartości y
-    xValuesFloat = np.array([2, 3, 4, 6])  # Przedziały x (zmienno pozycyjne)
-    yValuesFloat = np.array([1, 2, 3, 5])  # Przedziały y (zmienno pozycyjne)
+    xValuesFloat = np.array(xValues)  # Przedziały x
+    yValuesFloat = np.array(yValues)  # Przedziały y
     
     
     # Tworzenie funkcji sklejanej
@@ -33,7 +34,14 @@ def calculationFloat(start, end, derStart, derEnd):
 
     return valueStartFloat, valueEndFloat, coefficientsFloat
 
-valueStartFloat, valueEndFloat, coefficientsFloat = calculationFloat(start=1, end=7, derStart=6, derEnd=14)
+valueStartFloat, valueEndFloat, coefficientsFloat = calculationFloat(
+    start=1, 
+    end=7,
+    derStart=6,
+    derEnd=14,
+    xValues=[2, 3, 4, 6],
+    yValues=[1, 2, 3, 5]
+)
 
 print("Wartość na początku przedziału (zmienno pozycyjna):", valueStartFloat)
 print("Wartość na końcu przedziału (zmienno pozycyjna):", valueEndFloat)
