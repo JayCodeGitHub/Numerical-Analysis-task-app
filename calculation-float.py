@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline
 from mpmath import iv
 
+xValues=[2, 3, 4, 6]
+yValues=[1, 2, 3, 5]
 
 def calculationFloat(start, end, derStart, derEnd, xValues, yValues):
     
@@ -39,8 +41,8 @@ valueStartFloat, valueEndFloat, coefficientsFloat = calculationFloat(
     end=7,
     derStart=6,
     derEnd=14,
-    xValues=[2, 3, 4, 6],
-    yValues=[1, 2, 3, 5]
+    xValues=xValues,
+    yValues=yValues
 )
 
 print("Wartość na początku przedziału (zmienno pozycyjna):", valueStartFloat)
