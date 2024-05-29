@@ -24,8 +24,8 @@ def window():
     radio_var = tk.StringVar(value="Option 1")
 
 
-    info = tk.Label(root, text="", width=25)
-    info.pack(side=tk.RIGHT, padx=150)
+    info = tk.Text(root, width=70, height=50)
+    info.pack(side=tk.RIGHT, padx=70)
 
     arithmeticLabel = tk.Label(root, text="Wybierz rodzaj arytmetyki")
     arithmeticLabel.pack(padx=15, pady=15)
@@ -71,17 +71,21 @@ def window():
                 f1xn = -4.0,
                 xi = 23.5
             )
-            print("Wartość w punkcie", xi, "=", "{:.14e}".format(Value))
-            print("")
-            print("Współczynniki:")
+
+            info.delete('1.0', tk.END)
+
+            title = f"Wartość w punkcie {xi}:\n\n{Value:.14e}"
+            subTitle = "Współczynniki:"
+
+            value = f"{title}\n\n\n{subTitle}\n\n"
+            info.insert(tk.END, value)
 
             for i in range(n):
                 for j in range(4):
                     if(c[j][i] > 0 ):
-                        print(f"a[{j},{i}] =", " {:.14e}".format(c[j][i]))
+                        info.insert(tk.END, f"a[{j},{i}] =  {c[j][i]:.14e}\n")
                     else:
-                        print(f"a[{j},{i}] =", "{:.14e}".format(c[j][i]))
-            value = "Calculate"
+                        info.insert(tk.END, f"a[{j},{i}] = {c[j][i]:.14e}\n")
         elif radio_var.get() == "Option 2":
             c, Value, n, xi = calculateInterval(
                 x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
@@ -91,21 +95,24 @@ def window():
                 xi = 23.5
             )
 
-            print(f"Wartość w punkcie", xi, "= (", "{:.14e},".format(Value[0]),"{:.14e}".format(Value[1]), ")")
-            print('')
-            print("Współczynniki:")
+            info.delete('1.0', tk.END)
+
+            title = f"Wartość w punkcie {xi}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
+            subTitle = "Współczynniki:"
+
+            value = f"{title}\n\n\n{subTitle}\n\n"
+            info.insert(tk.END, value)
 
             for i in range(n):
                 for j in range(4):
                     if(c[0][j][i] > 0 and  c[1][j][i] > 0):
-                        print(f"a[{j},{i}] =", "(  {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = (  {c[0][j][i]:.14e},  {c[1][j][i]:.14e} )\n")
                     elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
-                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
                     elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
-                        print(f"a[{j},{i}] =", " {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
                     else:
-                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
-            value = "Calculate"
+                        info.insert(tk.END, f"a[{j},{i}] = ( {c[0][j][i]:.14e}, {c[1][j][i]:.14e} )\n")
         elif radio_var.get() == "Option 3":
             c, Value, n, xi = calculateInterval(
                 x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
@@ -114,22 +121,25 @@ def window():
                 f1xn = interval[-4.1, -3.9],
                 xi = 23.5
             )
-            print(f"Wartość w punkcie", xi, "= (", "{:.14e},".format(Value[0]),"{:.14e}".format(Value[1]), ")")
-            print('')
-            print("Współczynniki:")
+
+            info.delete('1.0', tk.END)
+
+            title = f"Wartość w punkcie {xi}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
+            subTitle = "Współczynniki:"
+
+            value = f"{title}\n\n\n{subTitle}\n\n"
+            info.insert(tk.END, value)
 
             for i in range(n):
                 for j in range(4):
                     if(c[0][j][i] > 0 and  c[1][j][i] > 0):
-                        print(f"a[{j},{i}] =", "(  {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = (  {c[0][j][i]:.14e},  {c[1][j][i]:.14e} )\n")
                     elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
-                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
                     elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
-                        print(f"a[{j},{i}] =", " {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+                        info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
                     else:
-                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
-            value = "Calculate"
-        info.config(text="" + value)
+                        info.insert(tk.END, f"a[{j},{i}] = ( {c[0][j][i]:.14e}, {c[1][j][i]:.14e} )\n")
 
     root.mainloop()
 
