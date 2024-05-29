@@ -8,8 +8,12 @@ from calculationInterval import calculateInterval
 xValuesRanges = [(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)]  # Przedziały x
 yValuesRanges = [(0.9, 1.1), (1.9, 2.1), (2.9, 3.1), (4.9, 5.1)]  # Przedziały y
 
-xValuesFloat=[2, 3, 4, 6]
-yValuesFloat=[1, 2, 3, 5]
+xValuesFloat = [17, 20, 23, 24, 25, 27, 27.7]
+yValuesFloat = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1]
+f1x0Float = 3.0
+f1xnFloat = -4.0
+
+xiInput = 23.5
 
 
 def window():
@@ -51,8 +55,8 @@ def window():
     derivativesEntry = tk.Entry(root)
     derivativesEntry.pack()
 
-    rangeLabel = tk.Label(root, text="Punk interpolacji (x)")
-    rangeLabel.pack(padx=10, pady=10)
+    xiInputEntry = tk.Label(root, text="Punk interpolacji (x)")
+    xiInputEntry.pack(padx=10, pady=10)
 
     rangeEntry = tk.Entry(root)
     rangeEntry.pack()
@@ -65,11 +69,11 @@ def window():
     def runCalculate():
         if radio_var.get() == "Option 1":
             c, Value, n, xi = calculate(
-                x = [17, 20, 23, 24, 25, 27, 27.7],
-                f = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1],
-                f1x0 = 3.0,
-                f1xn = -4.0,
-                xi = 23.5
+                x = xValuesFloat,
+                f = yValuesFloat,
+                f1x0 = f1x0Float,
+                f1xn = f1xnFloat,
+                xi = xiInput
             )
 
             info.delete('1.0', tk.END)
