@@ -4,9 +4,10 @@ from interval import interval
 from calculation import calculate
 from calculationInterval import calculateInterval
 
-
-xValuesRanges = [(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)]  # Przedziały x
-yValuesRanges = [(0.9, 1.1), (1.9, 2.1), (2.9, 3.1), (4.9, 5.1)]  # Przedziały y
+xValuesInterval = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]]
+yValuesInterval = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]]
+f1x0Interval = interval[2.9, 3.1]
+f1xnInterval = interval[-4.1, -3.9]
 
 xValuesFloat = [17, 20, 23, 24, 25, 27, 27.7]
 yValuesFloat = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1]
@@ -14,7 +15,6 @@ f1x0Float = 3.0
 f1xnFloat = -4.0
 
 xiInput = 23.5
-
 
 def window():
     root = tk.Tk()
@@ -61,10 +61,8 @@ def window():
     rangeEntry = tk.Entry(root)
     rangeEntry.pack()
 
-
     button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: runCalculate())
     button.pack(padx=15, pady=15)
-
 
     def runCalculate():
         if radio_var.get() == "Option 1":
@@ -92,11 +90,11 @@ def window():
                         info.insert(tk.END, f"a[{j},{i}] = {c[j][i]:.14e}\n")
         elif radio_var.get() == "Option 2":
             c, Value, n, xi = calculateInterval(
-                x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
-                f = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]],
-                f1x0 = interval[2.9, 3.1],
-                f1xn = interval[-4.1, -3.9],
-                xi = 23.5
+                x = xValuesInterval,
+                f = yValuesInterval,
+                f1x0 = f1x0Interval,
+                f1xn = f1xnInterval,
+                xi = xiInput
             )
 
             info.delete('1.0', tk.END)
@@ -119,11 +117,11 @@ def window():
                         info.insert(tk.END, f"a[{j},{i}] = ( {c[0][j][i]:.14e}, {c[1][j][i]:.14e} )\n")
         elif radio_var.get() == "Option 3":
             c, Value, n, xi = calculateInterval(
-                x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
-                f = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]],
-                f1x0 = interval[2.9, 3.1],
-                f1xn = interval[-4.1, -3.9],
-                xi = 23.5
+                x = xValuesInterval,
+                f = yValuesInterval,
+                f1x0 = f1x0Interval,
+                f1xn = f1xnInterval,
+                xi = xiInput
             )
 
             info.delete('1.0', tk.END)
