@@ -45,17 +45,17 @@ def window():
     interpolationPointsEntry = tk.Entry(root)
     interpolationPointsEntry.pack()
 
-    rangeLabel = tk.Label(root, text="Przedział")
-    rangeLabel.pack(padx=10, pady=10)
-
-    rangeEntry = tk.Entry(root)
-    rangeEntry.pack()
-
     derivativesLabel = tk.Label(root, text="Wartości pochodnych na końcach przedziału")
     derivativesLabel.pack(padx=10, pady=10)
 
     derivativesEntry = tk.Entry(root)
     derivativesEntry.pack()
+
+    rangeLabel = tk.Label(root, text="Punk interpolacji (x)")
+    rangeLabel.pack(padx=10, pady=10)
+
+    rangeEntry = tk.Entry(root)
+    rangeEntry.pack()
 
 
     button = tk.Button(root, text="Wykonaj Obliczenia", command=lambda: runCalculate())
