@@ -1,5 +1,8 @@
 import tkinter as tk
-from calculation import calculateRanges, calculationFloat
+from interval import interval
+
+from calculation import calculate
+from calculationInterval import calculateInterval
 
 
 xValuesRanges = [(1.9, 2.1), (2.9, 3.1), (3.9, 4.1), (5.9, 6.1)]  # Przedziały x
@@ -61,35 +64,71 @@ def window():
 
     def runCalculate():
         if radio_var.get() == "Option 1":
-            valueStartFloat, valueEndFloat, coefficientsFloat = calculationFloat(
-                start=1, 
-                end=7,
-                derStart=6,
-                derEnd=14,
-                xValues=xValuesFloat,
-                yValues=yValuesFloat
-            ) 
-            value = ""+ str(valueStartFloat) + "\n" + str(valueEndFloat) + "\n" + str(coefficientsFloat)
+            c, Value, n, xi = calculate(
+                x = [17, 20, 23, 24, 25, 27, 27.7],
+                f = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1],
+                f1x0 = 3.0,
+                f1xn = -4.0,
+                xi = 23.5
+            )
+            print("Wartość w punkcie", xi, "=", "{:.14e}".format(Value))
+            print("")
+            print("Współczynniki:")
+
+            for i in range(n):
+                for j in range(4):
+                    if(c[j][i] > 0 ):
+                        print(f"a[{j},{i}] =", " {:.14e}".format(c[j][i]))
+                    else:
+                        print(f"a[{j},{i}] =", "{:.14e}".format(c[j][i]))
+            value = "Calculate"
         elif radio_var.get() == "Option 2":
-            valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(
-                start=1,
-                end=7,
-                derStart=6,
-                derEnd=14,
-                xValues=xValuesRanges,
-                yValues=yValuesRanges
+            c, Value, n, xi = calculateInterval(
+                x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
+                f = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]],
+                f1x0 = interval[2.9, 3.1],
+                f1xn = interval[-4.1, -3.9],
+                xi = 23.5
             )
-            value = ""+ str(valueStartInterval) + "\n" + str(valueEndInterval) + "\n" + str(coefficientsInterval)
+
+            print(f"Wartość w punkcie", xi, "= (", "{:.14e},".format(Value[0]),"{:.14e}".format(Value[1]), ")")
+            print('')
+            print("Współczynniki:")
+
+            for i in range(n):
+                for j in range(4):
+                    if(c[0][j][i] > 0 and  c[1][j][i] > 0):
+                        print(f"a[{j},{i}] =", "(  {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                    elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
+                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                    elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
+                        print(f"a[{j},{i}] =", " {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+                    else:
+                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+            value = "Calculate"
         elif radio_var.get() == "Option 3":
-            valueStartInterval, valueEndInterval, coefficientsInterval = calculateRanges(
-                start=1,
-                end=7,
-                derStart=6,
-                derEnd=14,
-                xValues=xValuesRanges,
-                yValues=yValuesRanges
+            c, Value, n, xi = calculateInterval(
+                x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
+                f = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]],
+                f1x0 = interval[2.9, 3.1],
+                f1xn = interval[-4.1, -3.9],
+                xi = 23.5
             )
-            value = ""+ str(valueStartInterval) + "\n" + str(valueEndInterval) + "\n" + str(coefficientsInterval)
+            print(f"Wartość w punkcie", xi, "= (", "{:.14e},".format(Value[0]),"{:.14e}".format(Value[1]), ")")
+            print('')
+            print("Współczynniki:")
+
+            for i in range(n):
+                for j in range(4):
+                    if(c[0][j][i] > 0 and  c[1][j][i] > 0):
+                        print(f"a[{j},{i}] =", "(  {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                    elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
+                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
+                    elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
+                        print(f"a[{j},{i}] =", " {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+                    else:
+                        print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
+            value = "Calculate"
         info.config(text="" + value)
 
     root.mainloop()

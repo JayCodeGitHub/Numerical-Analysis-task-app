@@ -2,7 +2,7 @@ from scipy.interpolate import CubicSpline
 from interval import interval
 import numpy as np
 
-def calculate(x, f, f1x0, f1xn, xi): 
+def calculateInterval(x, f, f1x0, f1xn, xi): 
     bottom_x = []
     top_x = []
     for i in range(len(x)):
@@ -101,29 +101,3 @@ def calculate(x, f, f1x0, f1xn, xi):
     output.append(xi)
 
     return output
-
-
-
-
-c, Value, n, xi = calculate(
-    x = [interval[16.9, 17.1], interval[19.9, 20.1], interval[22.9, 23.1], interval[23.9, 24.1], interval[24.9, 25.1], interval[26.9, 27.1], interval[27.6, 27.8]],
-    f = [interval[4.4, 4.6], interval[6.9, 7.1], interval[6.0, 6.2], interval[5.5, 5.7], interval[5.7, 5.9], interval[5.1, 5.3], interval[4.0, 4.2]],
-    f1x0 = interval[2.9, 3.1],
-    f1xn = interval[-4.1, -3.9],
-    xi = 23.5
-)
-
-print(f"Wartość w punkcie", xi, "= (", "{:.14e},".format(Value[0]),"{:.14e}".format(Value[1]), ")")
-print('')
-print("Współczynniki:")
-
-for i in range(n):
-        for j in range(4):
-            if(c[0][j][i] > 0 and  c[1][j][i] > 0):
-                print(f"a[{j},{i}] =", "(  {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
-            elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
-                print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i])," {:.14e}".format(c[1][j][i]),")")
-            elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
-                print(f"a[{j},{i}] =", " {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")
-            else:
-                print(f"a[{j},{i}] =", "( {:.14e},".format(c[0][j][i]),"{:.14e}".format(c[1][j][i]),")")

@@ -82,22 +82,3 @@ def calculate(x, f, f1x0, f1xn, xi):
 
     return output
 
-c, Value, n, xi = calculate(
-    x = [17, 20, 23, 24, 25, 27, 27.7],
-    f = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1],
-    f1x0 = 3.0,
-    f1xn = -4.0,
-    xi = 23.5
-)
-
-print("Wartość w punkcie", xi, "=", "{:.14e}".format(Value))
-print("")
-print("Współczynniki:")
-
-for i in range(n):
-    for j in range(4):
-        if(c[j][i] > 0 ):
-            print(f"a[{j},{i}] =", " {:.14e}".format(c[j][i]))
-        else:
-            print(f"a[{j},{i}] =", "{:.14e}".format(c[j][i]))
-
