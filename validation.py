@@ -8,7 +8,7 @@ def validation(data, option):
         except ValueError:
             return False
     if option == 2:
-        pattern = re.compile(r'\d+(\.\d+)?(,\s\d+(\.\d+)?)*')
+        pattern = re.compile(r'-?\d+(\.\d+)?(,\s-?\d+(\.\d+)?)*')
         if pattern.fullmatch(data):
             return True
         else:
