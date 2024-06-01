@@ -42,11 +42,17 @@ def window():
     radio3 = tk.Radiobutton(root, text="Przedziałowe (dane przedziały)", variable=radio_var, value="Option 3")
     radio3.pack()
     
-    interpolationPointsLabel = tk.Label(root, text="Węzły Interpolacji")
-    interpolationPointsLabel.pack(padx=10, pady=20)
+    xValuesLabel = tk.Label(root, text="Wartości x")
+    xValuesLabel.pack(padx=10, pady=10)
 
-    interpolationPointsEntry = tk.Entry(root)
-    interpolationPointsEntry.pack()
+    xValuesEntry = tk.Entry(root)
+    xValuesEntry.pack()
+
+    yValuesLabel = tk.Label(root, text="Wartości y")
+    yValuesLabel.pack(padx=10, pady=10)
+
+    yValuesEntry = tk.Entry(root)
+    yValuesEntry.pack()
 
     derivativesLabel = tk.Label(root, text="Wartości pochodnych na końcach przedziału")
     derivativesLabel.pack(padx=10, pady=10)
