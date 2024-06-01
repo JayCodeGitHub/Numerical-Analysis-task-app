@@ -15,6 +15,8 @@ yValuesFloat = [4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1]
 f1x0Float = 3.0
 f1xnFloat = -4.0
 
+# xiValue = 23.5
+
 def window():
     root = tk.Tk()
     root.title("Funkcja sklejana stopnia trzeciego")
@@ -72,29 +74,41 @@ def window():
     def runCalculate():
         if radio_var.get() == "Option 1":
             if(validation(xiEntry.get(), 1)):
-                xiInput = float(xiEntry.get())
-                c, Value, n, xi = calculate(
-                    x = xValuesFloat,
-                    f = yValuesFloat,
-                    f1x0 = f1x0Float,
-                    f1xn = f1xnFloat,
-                    xi = xiInput
-                )
+                if(validation(xValuesEntry.get(), 2) and validation(yValuesEntry.get(), 2)):
+                    xValues = xValuesEntry.get().split(',')
+                    yValues = yValuesEntry.get().split(',')
+                    if(len(xValues) == len(yValues)):
+                        xiInput = float(xiEntry.get())
+                        xValues = [float(x) for x in xValues]
+                        yValues = [float(y) for y in yValues]
+                        c, Value, n, xi = calculate(
+                            x = xValues,
+                            f = yValues,
+                            f1x0 = f1x0Float,
+                            f1xn = f1xnFloat,
+                            xi = xiInput
+                        )
 
-                info.delete('1.0', tk.END)
+                        info.delete('1.0', tk.END)
 
-                title = f"Wartość w punkcie {xi}:\n\n{Value:.14e}"
-                subTitle = "Współczynniki:"
+                        title = f"Wartość w punkcie {xi}:\n\n{Value:.14e}"
+                        subTitle = "Współczynniki:"
 
-                value = f"{title}\n\n\n{subTitle}\n\n"
-                info.insert(tk.END, value)
+                        value = f"{title}\n\n\n{subTitle}\n\n"
+                        info.insert(tk.END, value)
 
-                for i in range(n):
-                    for j in range(4):
-                        if(c[j][i] > 0 ):
-                            info.insert(tk.END, f"a[{j},{i}] =  {c[j][i]:.14e}\n")
-                        else:
-                            info.insert(tk.END, f"a[{j},{i}] = {c[j][i]:.14e}\n")
+                        for i in range(n):
+                            for j in range(4):
+                                if(c[j][i] > 0 ):
+                                    info.insert(tk.END, f"a[{j},{i}] =  {c[j][i]:.14e}\n")
+                                else:
+                                    info.insert(tk.END, f"a[{j},{i}] = {c[j][i]:.14e}\n")
+                    else:
+                        info.delete('1.0', tk.END)
+                        info.insert(tk.END, "Ilość danych x oraz y nie zgadza się")
+                else:
+                    info.delete('1.0', tk.END)
+                    info.insert(tk.END, "Zły format danych x lub y")
             else:
                 info.delete('1.0', tk.END)
                 info.insert(tk.END, "Wprowadzono błędne dane")
