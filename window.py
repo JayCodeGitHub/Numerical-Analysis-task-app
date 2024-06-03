@@ -272,10 +272,10 @@ def window():
 
 
                     c, Value, n, xi = calculateInterval(
-                        x = xValuesInterval,
-                        f = yValuesInterval,
-                        f1x0 = f1x0Interval,
-                        f1xn = f1xnInterval,
+                        x = xValues,
+                        f = yValues,
+                        f1x0 = derivatives[0],
+                        f1xn = derivatives[1],
                         xi = xiInput
                     )
 
