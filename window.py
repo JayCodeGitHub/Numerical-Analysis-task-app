@@ -14,16 +14,14 @@ f1xnInterval = interval[-4.1, -3.9]
 # xValuesInterval = [16.9, 17.1], [19.9, 20.1], [22.9, 23.1], [23.9, 24.1], [24.9, 25.1], [26.9, 27.1], [27.6, 27.8]
 # yValuesInterval = [4.4, 4.6], [6.9, 7.1], [6.0, 6.2], [5.5, 5.7], [5.7, 5.9], [5.1, 5.3], [4.0, 4.2]
 
-# f1x0Interval = [2.9, 3.1]
-# f1xnInterval = [-4.1, -3.9]
+# d = [2.9, 3.1], [-4.1, -3.9]
 
 
 
 # xValuesIntervalNumbers = 17, 20, 23, 24, 25, 27, 27.7
 # yValuesIntervalNumbers = 4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1
 
-# f1x0IntervalNumbers = 3.0
-# f1xnIntervalNumbers = -4.0
+# d = 3.0, -4.0
 
 
 
@@ -111,7 +109,7 @@ def window():
                 info.insert(tk.END, "Wprowadzono błędne dane xi")
             elif error == 2:
                 info.delete('1.0', tk.END)
-                info.insert(tk.END, "Wprowadzono błędne dane")
+                info.insert(tk.END, "Wprowadzono błędne pochodne")
             elif error == 3:
                 info.delete('1.0', tk.END)
                 info.insert(tk.END, "Zły format danych x lub y")
@@ -175,7 +173,7 @@ def window():
                 info.insert(tk.END, "Wprowadzono błędne dane xi")
             elif error == 2:
                 info.delete('1.0', tk.END)
-                info.insert(tk.END, "Wprowadzono błędne dane")
+                info.insert(tk.END, "Wprowadzono błędne pochodne")
             elif error == 3:
                 info.delete('1.0', tk.END)
                 info.insert(tk.END, "Zły format danych x lub y")
@@ -191,8 +189,9 @@ def window():
                     xiInput = float(xiEntry.get())
                     xValues = [interval[float(x)-0.00000000000001, float(x)+0.00000000000001] for x in xValues]
                     yValues = [interval[float(y)-0.00000000000001, float(y)+0.00000000000001] for y in yValues]
-                    f1x0Float = interval[float(derivatives[0])-0.00000000000001, float(derivatives[0])+0.00000000000001]
-                    f1xnFloat = interval[float(derivatives[1])-0.00000000000001, float(derivatives[1])+0.00000000000001]
+                    f1x0Float = interval[float(derivatives[0])+0.00000000000001, float(derivatives[0])-0.00000000000001]
+                    f1xnFloat = interval[float(derivatives[1])+0.00000000000001, float(derivatives[1])-0.00000000000001]
+
                     c, Value, n, xi = calculateInterval(
                         x = xValues,
                         f = yValues,
@@ -223,37 +222,85 @@ def window():
                     info.delete('1.0', tk.END)
                     info.insert(tk.END, "Coś poszło nie tak: upewni się że wprowadzone dane nadają się do obliczeń")
         elif radio_var.get() == "Option 3":
-            if(validation(xiEntry.get(), 1)):
-                xiInput = float(xiEntry.get())
-                c, Value, n, xi = calculateInterval(
-                    x = xValuesInterval,
-                    f = yValuesInterval,
-                    f1x0 = f1x0Interval,
-                    f1xn = f1xnInterval,
-                    xi = xiInput
-                )
-
+            error = False
+            if not (validation(xiEntry.get(), 1)):
+                error = 1
+            if not (validation(derivativesEntry.get(), 3)):
+                error = 2
+            if not (validation(xValuesEntry.get(), 3) and validation(yValuesEntry.get(), 3)):
+                error = 3
+            derivatives = derivativesEntry.get()[1:-1].split('], [')
+            xValues = xValuesEntry.get()[1:-1].split('], [')
+            yValues = yValuesEntry.get()[1:-1].split('], [')
+            if not (len(xValues) == len(yValues)):
+                error = 4
+            elif not (len(derivatives) == 2):
+                error = 5
+            
+            if error == 1:
                 info.delete('1.0', tk.END)
-
-                title = f"Wartość w punkcie {xi}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
-                subTitle = "Współczynniki:"
-
-                value = f"{title}\n\n\n{subTitle}\n\n"
-                info.insert(tk.END, value)
-
-                for i in range(n):
-                    for j in range(4):
-                        if(c[0][j][i] > 0 and  c[1][j][i] > 0):
-                            info.insert(tk.END, f"a[{j},{i}] = (  {c[0][j][i]:.14e},  {c[1][j][i]:.14e} )\n")
-                        elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
-                            info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
-                        elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
-                            info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
-                        else:
-                            info.insert(tk.END, f"a[{j},{i}] = ( {c[0][j][i]:.14e}, {c[1][j][i]:.14e} )\n")
-            else:
+                info.insert(tk.END, "Wprowadzono błędne dane xi")
+            elif error == 2:
                 info.delete('1.0', tk.END)
-                info.insert(tk.END, "Wprowadzono błędne dane")
+                info.insert(tk.END, "Wprowadzono błędne pochodne")
+            elif error == 3:
+                info.delete('1.0', tk.END)
+                info.insert(tk.END, "Zły format danych x lub y")
+            elif error == 4:
+                info.delete('1.0', tk.END)
+                info.insert(tk.END, "Ilość danych x oraz y nie zgadza się")
+            elif error == 5:
+                info.delete('1.0', tk.END)
+                info.insert(tk.END, "Zła ilość pochodnych")
+
+
+            if not error:
+                try:
+                    xiInput = float(xiEntry.get())
+
+                    derivatives = derivativesEntry.get()
+                    derivatives = derivatives[1:-1].split('], [')
+                    derivatives = [interval[float(x.split(',')[0])-0.00000000000001, float(x.split(',')[1])+0.00000000000001] for x in derivatives]
+
+
+                    xValues = xValuesEntry.get()
+                    xValues = xValues[1:-1].split('], [')
+                    xValues = [interval[float(x.split(',')[0])-0.00000000000001, float(x.split(',')[1])+0.00000000000001] for x in xValues]
+
+                    yValues = yValuesEntry.get()
+                    yValues = yValues[1:-1].split('], [')
+                    yValues = [interval[float(x.split(',')[0])-0.00000000000001, float(x.split(',')[1])+0.00000000000001] for x in yValues]
+
+
+                    c, Value, n, xi = calculateInterval(
+                        x = xValuesInterval,
+                        f = yValuesInterval,
+                        f1x0 = f1x0Interval,
+                        f1xn = f1xnInterval,
+                        xi = xiInput
+                    )
+
+                    info.delete('1.0', tk.END)
+
+                    title = f"Wartość w punkcie {xi}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
+                    subTitle = "Współczynniki:"
+
+                    value = f"{title}\n\n\n{subTitle}\n\n"
+                    info.insert(tk.END, value)
+
+                    for i in range(n):
+                        for j in range(4):
+                            if(c[0][j][i] > 0 and  c[1][j][i] > 0):
+                                info.insert(tk.END, f"a[{j},{i}] = (  {c[0][j][i]:.14e},  {c[1][j][i]:.14e} )\n")
+                            elif(c[0][j][i] < 0 and  c[1][j][i] > 0):
+                                info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
+                            elif(c[0][j][i] > 0 and  c[1][j][i] < 0):
+                                info.insert(tk.END, f"a[{j},{i}] = ({c[0][j][i]:.14e}, {c[1][j][i]:.14e})\n")
+                            else:
+                                info.insert(tk.END, f"a[{j},{i}] = ( {c[0][j][i]:.14e}, {c[1][j][i]:.14e} )\n")
+                except ValueError:
+                    info.delete('1.0', tk.END)
+                    info.insert(tk.END, "Coś poszło nie tak: upewni się że wprowadzone dane nadają się do obliczeń")
 
     root.mainloop()
 
