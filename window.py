@@ -28,8 +28,7 @@ f1xnInterval = interval[-4.1, -3.9]
 # xValuesFloat = 17, 20, 23, 24, 25, 27, 27.7
 # yValuesFloat = 4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1
 
-# f1x0Float = 3.0
-# f1xnFloat = -4.0
+# d = 3.0, -4.0
 
 # xiValue = 23.5
 
