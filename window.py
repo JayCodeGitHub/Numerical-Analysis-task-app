@@ -189,8 +189,8 @@ def window():
                     xiInput = float(xiEntry.get())
                     xValues = [interval[float(x)-0.00000000000001, float(x)+0.00000000000001] for x in xValues]
                     yValues = [interval[float(y)-0.00000000000001, float(y)+0.00000000000001] for y in yValues]
-                    f1x0Float = interval[float(derivatives[0])+0.00000000000001, float(derivatives[0])-0.00000000000001]
-                    f1xnFloat = interval[float(derivatives[1])+0.00000000000001, float(derivatives[1])-0.00000000000001]
+                    f1x0Float = interval[float(derivatives[0])-0.00000000000001, float(derivatives[0])+0.00000000000001]
+                    f1xnFloat = interval[float(derivatives[1])-0.00000000000001, float(derivatives[1])+0.00000000000001]
 
                     c, Value, n, xi = calculateInterval(
                         x = xValues,
