@@ -15,14 +15,20 @@ f1xnInterval = interval[-4.1, -3.9]
 # yValuesInterval = [4.4, 4.6], [6.9, 7.1], [6.0, 6.2], [5.5, 5.7], [5.7, 5.9], [5.1, 5.3], [4.0, 4.2]
 
 # d = [2.9, 3.1], [-4.1, -3.9]
+[17.0, 17.0], [20.0, 20.0], [23.0, 23.0], [24.0, 24.0], [25.0, 25.0], [27.0, 27.0], [27.7, 27.7]
+[17, 17], [20, 20], [23, 23], [24, 24], [25, 25], [27, 27], [27.7, 27.7]
 
+[4.5, 4.5], [7.0, 7.0], [6.1, 6.1], [5.6, 5.6], [5.8, 5.8], [5.2, 5.2], [4.1, 4.1]
 
+[2.9, 3.1], [-4.1, -3.9]
+
+[23.4, 23.5]
+10 -2
 
 # xValuesIntervalNumbers = 17, 20, 23, 24, 25, 27, 27.7
 # yValuesIntervalNumbers = 4.5, 7.0, 6.1, 5.6, 5.8, 5.2, 4.1
 
 # d = 3.0, -4.0
-
 
 
 # xValuesFloat = 17, 20, 23, 24, 25, 27, 27.7
@@ -89,7 +95,7 @@ def window():
     def runCalculate():
         if radio_var.get() == "Option 1":
             error = False
-            if not (validation(xiEntry.get(), 1)):
+            if not (validation(xiEntry.get(), 2)):
                 error = 1
             if not (validation(derivativesEntry.get(), 2)):
                 error = 2
@@ -222,7 +228,7 @@ def window():
                     info.insert(tk.END, "Coś poszło nie tak: upewni się że wprowadzone dane nadają się do obliczeń")
         elif radio_var.get() == "Option 3":
             error = False
-            if not (validation(xiEntry.get(), 1)):
+            if not (validation(xiEntry.get(), 3)):
                 error = 1
             if not (validation(derivativesEntry.get(), 3)):
                 error = 2
@@ -255,7 +261,10 @@ def window():
 
             if not error:
                 try:
-                    xiInput = float(xiEntry.get())
+                    xiInput = xiEntry.get()
+                    xiInput = xiInput[1:-1].split('], [')
+                    xiInput = [interval[float(x.split(',')[0])-0.00000000000001, float(x.split(',')[1])+0.00000000000001] for x in xiInput]
+
 
                     derivatives = derivativesEntry.get()
                     derivatives = derivatives[1:-1].split('], [')
@@ -270,18 +279,34 @@ def window():
                     yValues = yValues[1:-1].split('], [')
                     yValues = [interval[float(x.split(',')[0])-0.00000000000001, float(x.split(',')[1])+0.00000000000001] for x in yValues]
 
+                    c, Value, n, xi = calculateInterval(
+                        x = xValues,
+                        f = yValues,
+                        f1x0 = derivatives[0],
+                        f1xn = derivatives[1],
+                        xi = xiInput[0][0][0]
+                    )
+
+                    left = Value[0]
 
                     c, Value, n, xi = calculateInterval(
                         x = xValues,
                         f = yValues,
                         f1x0 = derivatives[0],
                         f1xn = derivatives[1],
-                        xi = xiInput
+                        xi = xiInput[0][0][1]
                     )
+
+                    right = Value[1]
+
+                    if left > right:
+                        left, right = right, left
+
+                    Value = [left, right]
 
                     info.delete('1.0', tk.END)
 
-                    title = f"Wartość w punkcie {xi}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
+                    title = f"Wartość w przedziale {xiEntry.get()}:\n\n({Value[0]:.14e}, {Value[1]:.14e})"
                     subTitle = "Współczynniki:"
 
                     value = f"{title}\n\n\n{subTitle}\n\n"

@@ -15,7 +15,8 @@ def validation(data, option):
             return False
     if option == 3:
         pattern = re.compile(r'\[\s*-?\d+\.\d+\s*,\s*-?\d+\.\d+\s*\](\s*,\s*\[\s*-?\d+\.\d+\s*,\s*-?\d+\.\d+\s*\])*')
-        if pattern.fullmatch(data):
+        patternTwo = re.compile(r'\[\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\](\s*,\s*\[\s*-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?\s*\])*')
+        if pattern.fullmatch(data) or patternTwo.fullmatch(data):
             return True
         else:
             return False
